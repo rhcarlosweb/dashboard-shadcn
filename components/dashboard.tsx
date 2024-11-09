@@ -10,6 +10,8 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Progress } from "@/components/ui/progress"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
+import { SideMenu } from "@/components/SideMenu"
+
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -45,23 +47,25 @@ export function DashboardComponent() {
   return (
     <>
       <GlobalStyle />
-      <div className="flex-1 space-y-4 p-4 md:p-8 pt-6 dark bg-[#0A0A0A] text-white">
-      <div className="flex items-center justify-between space-y-2 flex-col sm:flex-row mb-4">
-        <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
-        <div className="flex items-center space-x-2 mt-2 sm:mt-0">
-          <select className="bg-[#1C1C1C] text-white border-[#262626] rounded-md p-2 text-sm sm:text-base">
-            <option value="week">Semana</option>
-            <option value="month">Mês</option>
-            <option value="year">Ano</option>
-            <option value="all">Todo Período</option>
-            <option value="custom">Personalizado</option>
-          </select>
-          <Button variant="outline" className="bg-[#0A0A0A] text-white border-[#262626] hover:bg-[#1C1C1C] text-sm sm:text-base">
-            <CalendarIcon className="mr-2 h-4 w-4" />
-            Filtrar Período
-          </Button>
-        </div>
-      </div>
+      <div className="flex">
+        <SideMenu />
+        <div className="flex-1 space-y-4 p-4 md:p-8 pt-6 dark bg-[#0A0A0A] text-white">
+          <div className="flex items-center justify-between space-y-2 flex-col sm:flex-row mb-4">
+            <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
+            <div className="flex items-center space-x-2 mt-2 sm:mt-0">
+              <select className="bg-[#1C1C1C] text-white border-[#262626] rounded-md p-2 text-sm sm:text-base">
+                <option value="week">Semana</option>
+                <option value="month">Mês</option>
+                <option value="year">Ano</option>
+                <option value="all">Todo Período</option>
+                <option value="custom">Personalizado</option>
+              </select>
+              <Button variant="outline" className="bg-[#0A0A0A] text-white border-[#262626] hover:bg-[#1C1C1C] text-sm sm:text-base">
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                Filtrar Período
+              </Button>
+            </div>
+          </div>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             <Card className="border-[#262626] bg-[#0A0A0A]">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -301,6 +305,7 @@ export function DashboardComponent() {
             
           </div>
       </div>
-    </>
-  )
+    </div>
+  </>
+)
 }
