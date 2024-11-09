@@ -11,6 +11,7 @@ import { Progress } from "@/components/ui/progress"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
 import { SideMenu } from "@/components/SideMenu"
+import { TopNav } from "@/components/TopNav"
 
 
 const GlobalStyle = createGlobalStyle`
@@ -47,20 +48,21 @@ export function DashboardComponent() {
   return (
     <>
       <GlobalStyle />
-      <div className="flex">
+      <TopNav />
+      <div className="flex pt-16">
         <SideMenu />
         <div className="flex-1 space-y-4 p-4 md:p-8 pt-6 dark bg-[#0A0A0A] text-white">
           <div className="flex items-center justify-between space-y-2 flex-col sm:flex-row mb-4">
             <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
             <div className="flex items-center space-x-2 mt-2 sm:mt-0">
-              <select className="bg-[#1C1C1C] text-white border-[#262626] rounded-md p-2 text-sm sm:text-base">
+              <select className="bg-[#1C1C1C] text-white border-[#262626] rounded-md p-2 text-base">
                 <option value="week">Semana</option>
                 <option value="month">Mês</option>
                 <option value="year">Ano</option>
                 <option value="all">Todo Período</option>
                 <option value="custom">Personalizado</option>
               </select>
-              <Button variant="outline" className="bg-[#0A0A0A] text-white border-[#262626] hover:bg-[#1C1C1C] text-sm sm:text-base">
+              <Button variant="outline" className="bg-[#0A0A0A] text-white border-[#262626] hover:bg-[#1C1C1C] text-base">
                 <CalendarIcon className="mr-2 h-4 w-4" />
                 Filtrar Período
               </Button>
