@@ -31,7 +31,7 @@ export function TopNav() {
         <div className="relative" ref={dropdownRef}>
           <button 
             onClick={() => setIsOpen(!isOpen)}
-            className="flex items-center space-x-2 hover:bg-[#1C1C1C] p-2 rounded-md transition-colors"
+            className="flex items-center space-x-2 p-2 rounded-md"
           >
             <img
               src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
@@ -41,7 +41,7 @@ export function TopNav() {
             <ChevronDown className={cn(
               "h-4 w-4 text-gray-400 transition-transform duration-200",
               isOpen && "rotate-180"
-            )} />
+            )} /> 
           </button>
           
           {isOpen && (
