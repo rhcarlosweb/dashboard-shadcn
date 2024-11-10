@@ -26,24 +26,31 @@ const GlobalStyle = createGlobalStyle`
 `
 
 export function DashboardComponent() {
+  // Função auxiliar para gerar números aleatórios
+  const randomNumber = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1) + min)
+
+  // Dados aleatórios para o gráfico de receita
   const revenueData = [
-    { name: "Jan", total: 1200 },
-    { name: "Fev", total: 1800 },
-    { name: "Mar", total: 2200 },
-    { name: "Abr", total: 2600 },
-    { name: "Mai", total: 3200 },
-    { name: "Jun", total: 3800 },
+    { name: "Jan", total: randomNumber(800, 2000) },
+    { name: "Fev", total: randomNumber(1000, 2500) },
+    { name: "Mar", total: randomNumber(1500, 3000) },
+    { name: "Abr", total: randomNumber(2000, 3500) },
+    { name: "Mai", total: randomNumber(2500, 4000) },
+    { name: "Jun", total: randomNumber(3000, 4500) },
   ]
 
-  const cardChartData = [
-    { name: '1', value: 400 },
-    { name: '2', value: 300 },
-    { name: '3', value: 500 },
-    { name: '4', value: 450 },
-    { name: '5', value: 600 },
-    { name: '6', value: 550 },
-    { name: '7', value: 700 },
-  ]
+  // Dados aleatórios para os mini gráficos dos cards
+  const generateRandomChartData = () => {
+    return Array.from({ length: 7 }, (_, i) => ({
+      name: (i + 1).toString(),
+      value: randomNumber(200, 800)
+    }))
+  }
+
+  const revenueChartData = generateRandomChartData()
+  const premiumViewsChartData = generateRandomChartData()
+  const freeViewsChartData = generateRandomChartData()
+  const videosChartData = generateRandomChartData()
 
   return (
     <>
@@ -81,7 +88,7 @@ export function DashboardComponent() {
                 </p>
                 <div className="h-[80px] mt-4">
                   <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={cardChartData}>
+                    <AreaChart data={revenueChartData}>
                       <defs>
                         <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
                           <stop offset="5%" stopColor="#D80000" stopOpacity={0.8}/>
@@ -106,7 +113,7 @@ export function DashboardComponent() {
                 </p>
                 <div className="h-[80px] mt-4">
                   <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={cardChartData}>
+                    <AreaChart data={premiumViewsChartData}>
                       <defs>
                         <linearGradient id="colorPremiumViews" x1="0" y1="0" x2="0" y2="1">
                           <stop offset="5%" stopColor="#D80000" stopOpacity={0.8}/>
@@ -131,7 +138,7 @@ export function DashboardComponent() {
                 </p>
                 <div className="h-[80px] mt-4">
                   <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={cardChartData}>
+                    <AreaChart data={freeViewsChartData}>
                       <defs>
                         <linearGradient id="colorFreeViews" x1="0" y1="0" x2="0" y2="1">
                           <stop offset="5%" stopColor="#D80000" stopOpacity={0.8}/>
@@ -156,7 +163,7 @@ export function DashboardComponent() {
                 </p>
                 <div className="h-[80px] mt-4">
                   <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={cardChartData}>
+                    <AreaChart data={videosChartData}>
                       <defs>
                         <linearGradient id="colorVideos" x1="0" y1="0" x2="0" y2="1">
                           <stop offset="5%" stopColor="#D80000" stopOpacity={0.8}/>
