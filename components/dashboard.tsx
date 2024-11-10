@@ -52,7 +52,7 @@ export function DashboardComponent() {
       <div className="flex pt-16">
         <SideMenu />
         <div className="flex-1 space-y-4 p-4 md:p-8 pt-6 dark bg-[#0A0A0A] text-white">
-          <div className="flex items-center justify-between space-y-2 flex-col sm:flex-row mb-4">
+          <div className="flex items-start justify-between space-y-2 flex-col sm:flex-row sm:items-center mb-4">
             <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
             <div className="flex items-center space-x-2 mt-2 sm:mt-0">
               <select className="bg-[#1C1C1C] text-white border-[#262626] rounded-md p-2 text-base">
