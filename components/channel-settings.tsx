@@ -2,7 +2,7 @@
 
 import { createGlobalStyle } from 'styled-components'
 import { useState } from 'react'
-import { Trash2, Upload, Plus, Instagram, Facebook, Twitter, Youtube, Twitch, TikTok, Globe } from "lucide-react"
+import { Trash2, Upload, Plus, Instagram, Facebook, Twitter, Youtube, Twitch, TikTok, Globe, MessageCircle } from "lucide-react"
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -33,7 +33,8 @@ const socialIcons = {
   youtube: Youtube,
   twitch: Twitch,
   tiktok: TikTok,
-  website: Globe
+  telegram: MessageCircle,
+  website: Globe,
 }
 
 const detectPlatform = (url: string): keyof typeof socialIcons => {
@@ -56,6 +57,9 @@ const detectPlatform = (url: string): keyof typeof socialIcons => {
   }
   if (lowercaseUrl.includes('tiktok.com')) {
     return 'tiktok'
+  }
+  if (lowercaseUrl.includes('t.me') || lowercaseUrl.includes('telegram.me')) {
+    return 'telegram'
   }
   
   return 'website'
@@ -124,73 +128,75 @@ export function ChannelSettingsComponent() {
           </div>
 
           <div className="grid gap-4">
-            <Card className="border-[#262626] bg-[#0A0A0A]">
-              <CardHeader>
-                <CardTitle>Imagem de Capa</CardTitle>
-                <CardDescription className="text-gray-400">
-                  Imagem que aparecerá no topo do seu canal
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-col gap-4">
-                  {coverImage && (
-                    <div className="relative w-full h-48 bg-gray-800 rounded-lg overflow-hidden">
-                      <img src={coverImage} alt="Cover" className="w-full h-full object-cover" />
+            <div className="grid grid-cols-1 md:grid-cols-[1fr,400px] gap-4">
+              <Card className="border-[#262626] bg-[#0A0A0A]">
+                <CardHeader>
+                  <CardTitle>Imagem de Capa</CardTitle>
+                  <CardDescription className="text-gray-400">
+                    Imagem que aparecerá no topo do seu canal
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-col gap-4">
+                    {coverImage && (
+                      <div className="relative w-full h-48 bg-gray-800 rounded-lg overflow-hidden">
+                        <img src={coverImage} alt="Cover" className="w-full h-full object-cover" />
+                      </div>
+                    )}
+                    <div className="flex items-center gap-4">
+                      <Input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleCoverUpload}
+                        className="hidden"
+                        id="cover-upload"
+                      />
+                      <Label
+                        htmlFor="cover-upload"
+                        className="flex items-center gap-2 px-4 py-2 bg-[#1C1C1C] text-white rounded-md cursor-pointer hover:bg-[#262626] transition-colors"
+                      >
+                        <Upload className="w-4 h-4" />
+                        Upload Capa
+                      </Label>
                     </div>
-                  )}
-                  <div className="flex items-center gap-4">
-                    <Input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleCoverUpload}
-                      className="hidden"
-                      id="cover-upload"
-                    />
-                    <Label
-                      htmlFor="cover-upload"
-                      className="flex items-center gap-2 px-4 py-2 bg-[#1C1C1C] text-white rounded-md cursor-pointer hover:bg-[#262626] transition-colors"
-                    >
-                      <Upload className="w-4 h-4" />
-                      Upload Capa
-                    </Label>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
 
-            <Card className="border-[#262626] bg-[#0A0A0A]">
-              <CardHeader>
-                <CardTitle>Avatar</CardTitle>
-                <CardDescription className="text-gray-400">
-                  Imagem de perfil do seu canal
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-col gap-4">
-                  {avatar && (
-                    <div className="relative w-32 h-32 bg-gray-800 rounded-full overflow-hidden">
-                      <img src={avatar} alt="Avatar" className="w-full h-full object-cover" />
+              <Card className="border-[#262626] bg-[#0A0A0A]">
+                <CardHeader>
+                  <CardTitle>Avatar</CardTitle>
+                  <CardDescription className="text-gray-400">
+                    Imagem de perfil do seu canal
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-col gap-4">
+                    {avatar && (
+                      <div className="relative w-32 h-32 bg-gray-800 rounded-full overflow-hidden">
+                        <img src={avatar} alt="Avatar" className="w-full h-full object-cover" />
+                      </div>
+                    )}
+                    <div className="flex items-center gap-4">
+                      <Input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleAvatarUpload}
+                        className="hidden"
+                        id="avatar-upload"
+                      />
+                      <Label
+                        htmlFor="avatar-upload"
+                        className="flex items-center gap-2 px-4 py-2 bg-[#1C1C1C] text-white rounded-md cursor-pointer hover:bg-[#262626] transition-colors"
+                      >
+                        <Upload className="w-4 h-4" />
+                        Upload Avatar
+                      </Label>
                     </div>
-                  )}
-                  <div className="flex items-center gap-4">
-                    <Input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleAvatarUpload}
-                      className="hidden"
-                      id="avatar-upload"
-                    />
-                    <Label
-                      htmlFor="avatar-upload"
-                      className="flex items-center gap-2 px-4 py-2 bg-[#1C1C1C] text-white rounded-md cursor-pointer hover:bg-[#262626] transition-colors"
-                    >
-                      <Upload className="w-4 h-4" />
-                      Upload Avatar
-                    </Label>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </div>
 
             <Card className="border-[#262626] bg-[#0A0A0A]">
               <CardHeader>
