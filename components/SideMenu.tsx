@@ -11,18 +11,20 @@ import {
   Settings, 
   BarChart3,
 } from "lucide-react"
+import { usePathname } from 'next/navigation'
 
 const menuItems = [
   { icon: LayoutDashboard, label: 'Dashboard', href: '/' },
-  { icon: Video, label: 'Vídeos', href: '/videos' },
-  { icon: Users, label: 'Assinantes', href: '/subscribers' },
-  { icon: BarChart3, label: 'Analytics', href: '/analytics' },
-  { icon: Settings, label: 'Configurações', href: '/settings' },
+  // { icon: Video, label: 'Vídeos', href: '/videos' },
+  // { icon: Users, label: 'Assinantes', href: '/subscribers' },
+  // { icon: BarChart3, label: 'Analytics', href: '/analytics' },
+  // { icon: Settings, label: 'Configurações', href: '/settings' },
   { icon: Settings, label: 'Canal', href: '/settings/channel' },
 ]
 
 export function SideMenu() {
   const [expanded, setExpanded] = useState(true)
+  const pathname = usePathname()
 
   useEffect(() => {
     const handleResize = () => {
@@ -53,7 +55,7 @@ export function SideMenu() {
             href={href}
             className={cn(
               "flex items-center px-3 py-2 text-white hover:bg-[#1C1C1C] rounded-md transition-colors",
-              href === '/' && "bg-[#1C1C1C]",
+              pathname === href && "bg-[#1C1C1C]",
               expanded ? "justify-start gap-4" : "justify-center"
             )}
           >
