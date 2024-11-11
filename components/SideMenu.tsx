@@ -18,6 +18,7 @@ const menuItems = [
   { icon: Users, label: 'Assinantes', href: '/subscribers' },
   { icon: BarChart3, label: 'Analytics', href: '/analytics' },
   { icon: Settings, label: 'Configurações', href: '/settings' },
+  { icon: Settings, label: 'Canal', href: '/settings/channel' },
 ]
 
 export function SideMenu() {
