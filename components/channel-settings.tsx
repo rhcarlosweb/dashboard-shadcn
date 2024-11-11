@@ -36,6 +36,31 @@ const socialIcons = {
   website: Globe
 }
 
+const detectPlatform = (url: string): keyof typeof socialIcons => {
+  const lowercaseUrl = url.toLowerCase()
+  
+  if (lowercaseUrl.includes('instagram.com') || lowercaseUrl.includes('ig.')) {
+    return 'instagram'
+  }
+  if (lowercaseUrl.includes('facebook.com') || lowercaseUrl.includes('fb.com')) {
+    return 'facebook'
+  }
+  if (lowercaseUrl.includes('twitter.com') || lowercaseUrl.includes('x.com')) {
+    return 'twitter'
+  }
+  if (lowercaseUrl.includes('youtube.com') || lowercaseUrl.includes('youtu.be')) {
+    return 'youtube'
+  }
+  if (lowercaseUrl.includes('twitch.tv')) {
+    return 'twitch'
+  }
+  if (lowercaseUrl.includes('tiktok.com')) {
+    return 'tiktok'
+  }
+  
+  return 'website'
+}
+
 export function ChannelSettingsComponent() {
   const [coverImage, setCoverImage] = useState<string | null>(null)
   const [avatar, setAvatar] = useState<string | null>(null)
@@ -75,9 +100,16 @@ export function ChannelSettingsComponent() {
   }
 
   const updateSocialLink = (id: string, field: 'platform' | 'url', value: string) => {
-    setSocialLinks(socialLinks.map(link => 
-      link.id === id ? { ...link, [field]: value } : link
-    ))
+    setSocialLinks(socialLinks.map(link => {
+      if (link.id === id) {
+        if (field === 'url') {
+          const detectedPlatform = detectPlatform(value)
+          return { ...link, url: value, platform: detectedPlatform }
+        }
+        return { ...link, [field]: value }
+      }
+      return link
+    }))
   }
 
   return (
@@ -92,75 +124,73 @@ export function ChannelSettingsComponent() {
           </div>
 
           <div className="grid gap-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Card className="border-[#262626] bg-[#0A0A0A]">
-                <CardHeader>
-                  <CardTitle>Imagem de Capa</CardTitle>
-                  <CardDescription className="text-gray-400">
-                    Imagem que aparecerá no topo do seu canal
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex flex-col gap-4">
-                    {coverImage && (
-                      <div className="relative w-full h-48 bg-gray-800 rounded-lg overflow-hidden">
-                        <img src={coverImage} alt="Cover" className="w-full h-full object-cover" />
-                      </div>
-                    )}
-                    <div className="flex items-center gap-4">
-                      <Input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleCoverUpload}
-                        className="hidden"
-                        id="cover-upload"
-                      />
-                      <Label
-                        htmlFor="cover-upload"
-                        className="flex items-center gap-2 px-4 py-2 bg-[#1C1C1C] text-white rounded-md cursor-pointer hover:bg-[#262626] transition-colors"
-                      >
-                        <Upload className="w-4 h-4" />
-                        Upload Capa
-                      </Label>
+            <Card className="border-[#262626] bg-[#0A0A0A]">
+              <CardHeader>
+                <CardTitle>Imagem de Capa</CardTitle>
+                <CardDescription className="text-gray-400">
+                  Imagem que aparecerá no topo do seu canal
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-col gap-4">
+                  {coverImage && (
+                    <div className="relative w-full h-48 bg-gray-800 rounded-lg overflow-hidden">
+                      <img src={coverImage} alt="Cover" className="w-full h-full object-cover" />
                     </div>
+                  )}
+                  <div className="flex items-center gap-4">
+                    <Input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleCoverUpload}
+                      className="hidden"
+                      id="cover-upload"
+                    />
+                    <Label
+                      htmlFor="cover-upload"
+                      className="flex items-center gap-2 px-4 py-2 bg-[#1C1C1C] text-white rounded-md cursor-pointer hover:bg-[#262626] transition-colors"
+                    >
+                      <Upload className="w-4 h-4" />
+                      Upload Capa
+                    </Label>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </CardContent>
+            </Card>
 
-              <Card className="border-[#262626] bg-[#0A0A0A]">
-                <CardHeader>
-                  <CardTitle>Avatar</CardTitle>
-                  <CardDescription className="text-gray-400">
-                    Imagem de perfil do seu canal
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex flex-col gap-4">
-                    {avatar && (
-                      <div className="relative w-32 h-32 bg-gray-800 rounded-full overflow-hidden">
-                        <img src={avatar} alt="Avatar" className="w-full h-full object-cover" />
-                      </div>
-                    )}
-                    <div className="flex items-center gap-4">
-                      <Input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleAvatarUpload}
-                        className="hidden"
-                        id="avatar-upload"
-                      />
-                      <Label
-                        htmlFor="avatar-upload"
-                        className="flex items-center gap-2 px-4 py-2 bg-[#1C1C1C] text-white rounded-md cursor-pointer hover:bg-[#262626] transition-colors"
-                      >
-                        <Upload className="w-4 h-4" />
-                        Upload Avatar
-                      </Label>
+            <Card className="border-[#262626] bg-[#0A0A0A]">
+              <CardHeader>
+                <CardTitle>Avatar</CardTitle>
+                <CardDescription className="text-gray-400">
+                  Imagem de perfil do seu canal
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-col gap-4">
+                  {avatar && (
+                    <div className="relative w-32 h-32 bg-gray-800 rounded-full overflow-hidden">
+                      <img src={avatar} alt="Avatar" className="w-full h-full object-cover" />
                     </div>
+                  )}
+                  <div className="flex items-center gap-4">
+                    <Input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleAvatarUpload}
+                      className="hidden"
+                      id="avatar-upload"
+                    />
+                    <Label
+                      htmlFor="avatar-upload"
+                      className="flex items-center gap-2 px-4 py-2 bg-[#1C1C1C] text-white rounded-md cursor-pointer hover:bg-[#262626] transition-colors"
+                    >
+                      <Upload className="w-4 h-4" />
+                      Upload Avatar
+                    </Label>
                   </div>
-                </CardContent>
-              </Card>
-            </div>
+                </div>
+              </CardContent>
+            </Card>
 
             <Card className="border-[#262626] bg-[#0A0A0A]">
               <CardHeader>
